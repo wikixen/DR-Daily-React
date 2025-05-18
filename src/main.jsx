@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import App from "./App.jsx";
 import { Bookmarks } from "./pages/bookmarks.jsx";
 import { Home } from "./pages/home.jsx";
-import { NotFound } from "./pages/notFOund.jsx";
+import { NotFound } from "./pages/notFound.jsx";
 import "./tailwind.css";
 
 const router = createBrowserRouter([
