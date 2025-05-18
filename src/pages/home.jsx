@@ -6,10 +6,10 @@ import { PrimaryBtn } from "../components/ui/primaryBtn";
 import { ArticlesContext } from "../utils/articlesContext";
 import { useOutletContext } from "react-router";
 
-// When an article card is clicked the webpage opens in a dialog within an iframe
-export const Home = ({}) => {
+export const Home = () => {
   const [articles, isLoading, error] = useContext(ArticlesContext);
-  const searchResults = useOutletContext();
+  const {searchResults} = useOutletContext(); //Context declared in App.jsx 
+  
 
   if (isLoading) {
     return (
