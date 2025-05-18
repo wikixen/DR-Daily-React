@@ -28,14 +28,14 @@ export const Header = ({ theme, setTheme, setSearchResults }) => (
           </Link>
         }
       />
-      <ToggleComponent
+      {/* <ToggleComponent
         ariaLabel="Go to Saved Articles"
         children={
           <Link to="/bookmarks">
             <BookmarkIcon />
           </Link>
         }
-      />
+      /> */}
       <ToggleComponent
         ariaLabel="Toggle theme"
         children={

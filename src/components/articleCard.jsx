@@ -46,7 +46,7 @@ export const ArticleCard = ({ article }) => {
             Read Article
           </a>
         </PrimaryBtn>
-        <SaveToast article={article} />
+        {/* <SaveToast article={article} /> */}
       </div>
     </article>
   );

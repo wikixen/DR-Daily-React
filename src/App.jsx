@@ -42,7 +42,7 @@ export default function App() {
         >
           <Header theme={theme} setTheme={setTheme} setSearchResults={setSearchResults} />
           <hr className="border-b-1 border-gray-100 dark:border-gray-800 w-full" />
-          <Outlet context={searchResults} />
+        <Outlet context={searchResults} />
         </main>
     </ArticlesContext.Provider>
   );
