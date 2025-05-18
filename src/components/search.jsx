@@ -14,7 +14,7 @@ export const Search = ({setSearchResults}) => {
   }
   return (
     <form
-      className="h-auto w-96 flex items-center not-lg:w-2/3 justify-between gap-2 rounded-md border-1 border-gray-200"
+      className="h-auto w-96 flex items-center not-lg:w-2/3 justify-between gap-2 rounded-md border-1 border-gray-200 dark:text-gray-300"
       onSubmit={(e) => e.preventDefault()}
     >
       <input
@@ -24,7 +24,7 @@ export const Search = ({setSearchResults}) => {
         placeholder="Search articles..."
         onChange={handleSearch}
       />
-      <button className="p-3 rounded-md cursor-pointer hover:bg-gray-300">
+      <button className="p-3">
         <MagnifyingGlassIcon />
       </button>
     </form>
