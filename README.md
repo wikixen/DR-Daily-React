@@ -8,6 +8,4 @@ the Dialog & theme toggle.
 
 Unfortunately I can't deploy it because the NewsAPI free tier only covers 100 requests per month🙃.
 
-<video width="1280" height="720" controls>
-<source src="./repo_assets/demo_vid.mp4" type="video/mp4">
-</video>
+https://github.com/wikixen/DR-Daily-React/blob/main/repo_assets/demo_vid.mp4
