@@ -1,63 +1,47 @@
-import { DialogComponent } from "../components/ui/dialog";
-import { ArticleIframe } from "../components/articleIframe";
-import { ArticleCard } from "../components/articleCard";
-import { useEffect, useState } from "react";
 import { SymbolIcon } from "@radix-ui/react-icons";
-
-const URL = "https://newsapi.org/v2"
-const API_KEY = import.meta.env.VITE_API_KEY;
+import { useContext } from "react";
+import { ArticleCard } from "../components/articleCard";
+import { Title } from "../components/title";
+import { PrimaryBtn } from "../components/ui/primaryBtn";
+import { ArticlesContext } from "../utils/articlesContext";
+import { useOutletContext } from "react-router";
 
 // When an article card is clicked the webpage opens in a dialog within an iframe
-export const Home = () => {
-  const [error, setError] = useState();
-  const [isLoading, setIsLoading] = useState(false)
-  const [articles, setArticles] = useState([])
-
-  useEffect(() => {
-    const fetchArticles = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(`${URL}/everything?q=dominican+republic&republica+dominicana&apiKey=${API_KEY}`);
-        const articles = await response.json();
-        setArticles(articles.articles);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchArticles();
-  }, []);
+export const Home = ({}) => {
+  const [articles, isLoading, error] = useContext(ArticlesContext);
+  const searchResults = useOutletContext();
 
   if (isLoading) {
     return (
-      <section className="flex h-screen items-center justify-center">
-        <SymbolIcon className="size-[35px] animate-spin" />
+      <section className="flex h-screen items-center justify-center bg-navy">
+        <SymbolIcon className="size-[35px] animate-spin text-white" />
       </section>
-    )
+    );
   }
   if (error) {
     return (
-      <section className="flex flex-col h-screen items-center justify-center gap-2">
+      <section className="flex flex-col h-screen items-center justify-center gap-2 bg-navy text-white">
         <p className="text-xl">Something went wrong try again.</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="px-4 py-3 border-1 rounded-md hover:bg-gray-400 hover:cursor-pointer transition-colors"
-        >Refresh
-        </button>
+        <div>
+          <PrimaryBtn onClick={() => window.location.reload()}>
+            Refresh
+          </PrimaryBtn>
+        </div>
       </section>
-    )
+    );
   }
-  
+
   return (
-    <section className="flex flex-row flex-wrap gap-2 my-4">
-      {articles.map((article, i) => (
-        <DialogComponent
-          key={i}
-          button={<ArticleCard article={article} />}
-          children={<ArticleIframe article={article} />}
-        />
-      ))}
+    <section className="px-4 lg:w-2/3">
+      <Title
+        title={"Latest News"}
+        subtitle={"Stay updated with the latest news from the Dominican Republic"}
+      />
+      <section className="flex flex-row flex-wrap gap-6 my-4">
+        {searchResults.map((article, i) => (
+          <ArticleCard key={i} article={article} />
+        ))}
+      </section>
     </section>
   );
 };
