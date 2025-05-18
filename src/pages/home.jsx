@@ -8,7 +8,7 @@ import { useOutletContext } from "react-router";
 
 export const Home = () => {
   const [articles, isLoading, error] = useContext(ArticlesContext);
-  const {searchResults} = useOutletContext(); //Context declared in App.jsx 
+  const [searchResults, setSearchResults] = useOutletContext(); //Context declared in App.jsx 
   
 
   if (isLoading) {
