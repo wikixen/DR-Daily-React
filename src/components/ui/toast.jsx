@@ -19,8 +19,8 @@ export const SaveToast = ({ article }) => {
         onClick={() => {
           setOpen(false);
           setSaved(!saved);
-          window.clearTimeout(timerRef.current);
-          timerRef.current = window.setTimeout(() => {
+          clearTimeout(timerRef.current);
+          timerRef.current = setTimeout(() => {
             articleNameRef.current = article.title
             setOpen(true);
           }, 100);
@@ -48,7 +48,7 @@ export const SaveToast = ({ article }) => {
           className="[grid-area:_action] text-gray-500 hover:text-black  dark:text-gray-400 dark:hover:text-white cursor-pointer"
           asChild
         >
-          <button>
+          <button type="button">
             <Cross1Icon />
           </button>
         </Toast.Action>
