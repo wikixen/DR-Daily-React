@@ -1,13 +1,18 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import { PageTitle } from "../components/pageTitle";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: Index,
-})
+});
 
 function Index() {
+  
   return (
-    <div className="p-2">
-      <h3>Welcome Home!</h3>
+    <div>
+      <PageTitle
+        title={"Latest News"}
+        subtitle={"Stay updated with the latest news from the Dominican Republic"}
+      />
     </div>
-  )
+  );
 }
