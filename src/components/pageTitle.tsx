@@ -1,4 +1,8 @@
-export const Title = ({ title, subtitle }) => (
+interface Props {
+  title: string;
+  subtitle: string;
+}
+export const PageTitle = ({ title, subtitle }: Props) => (
   <section className="flex flex-col py-4 gap-2">
     <h1 className="text-3xl font-bold dark:text-white">{title}</h1>
     <h2 className="text-lg text-gray-500">{subtitle}</h2>
