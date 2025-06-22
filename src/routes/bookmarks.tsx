@@ -1,36 +1,30 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { PiBookmark } from "react-icons/pi";
 import { ArticleCard } from "../components/articleCard";
 import { PageTitle } from "../components/pageTitle";
 import { getSavedArticles } from "../localArticles";
-import sample from "../sample.json";
+import { Article } from "../model";
 
 export const Route = createFileRoute("/bookmarks")({
   component: RouteComponent,
+  validateSearch: (search) => {
+    return {
+      q: (search.q as string) || "",
+    };
+  },
+  loaderDeps: ({ search: { q } }) => ({ q }),
+  loader: async ({ context }) => {
+    const feed = await context.feed;
+    return feed;
+  },
 });
 
 function RouteComponent() {
-  const savedArticles = getSavedArticles();
-  console.log(savedArticles);
+  const articles = Route.useLoaderData().articles;
+  const savedUrls = getSavedArticles();
+  const { q } = useSearch({ from: "/bookmarks" });
 
-  if (savedArticles.length > 0) {
-    // Finds all saved articles by filtering out those whose URLs dont match
-    const articles = sample.filter((item) => savedArticles.includes(item.url));
-
-    return (
-      <div>
-        <PageTitle
-          title={"Bookmarks"}
-          subtitle={"Articles you've saved for reading later"}
-        />
-        <section className="flex flex-wrap gap-8">
-          {articles.map((article) => (
-            <ArticleCard article={article} key={article.url} />
-          ))}
-        </section>
-      </div>
-    );
-  } else {
+  if (!(savedUrls.length > 0)) {
     return (
       <section className="px-4 h-full">
         <PageTitle
@@ -48,4 +42,26 @@ function RouteComponent() {
       </section>
     );
   }
+  // Finds all saved articles by filtering out those whose URLs dont match
+  const savedArticles: Article[] = articles.filter((article) =>
+    savedUrls.includes(article.url!)
+  );
+
+  const filteredArticles = savedArticles.filter((article) =>
+    article.title!.includes(q)
+  );
+
+  return (
+    <div>
+      <PageTitle
+        title={"Bookmarks"}
+        subtitle={"Articles you've saved for reading later"}
+      />
+      <section className="flex flex-wrap gap-8">
+        {filteredArticles.map((article) => (
+          <ArticleCard article={article} key={article.url} />
+        ))}
+      </section>
+    </div>
+  );
 }

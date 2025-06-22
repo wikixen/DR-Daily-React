@@ -4,7 +4,7 @@ export const saveArticle = (articleUrl: string) => {
   if (localStorage.getItem(store) === null) {
     localStorage.setItem(store, "[]");
   }
-  let oldData = JSON.parse(localStorage.getItem(store)!);
+  const oldData = JSON.parse(localStorage.getItem(store)!);
   if (!oldData.includes(articleUrl)) {
     oldData.push(articleUrl);
   }

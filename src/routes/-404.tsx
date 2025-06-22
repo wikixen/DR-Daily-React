@@ -9,7 +9,7 @@ export const NotFound = () => (
     </h1>
     <div>
       <Btn>
-        <Link to="/">
+        <Link to="/" search={{ q: "" }}>
           Return to Home
         </Link>
       </Btn>

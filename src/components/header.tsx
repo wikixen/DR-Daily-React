@@ -1,4 +1,9 @@
-import { Link } from "@tanstack/react-router";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearch,
+} from "@tanstack/react-router";
 import {
   PiBookBookmark,
   PiBookBookmarkFill,
@@ -6,24 +11,15 @@ import {
   PiHouseSimpleLight,
   PiMagnifyingGlass,
 } from "react-icons/pi";
+import { Route } from "../routes/index";
 import { Btn } from "./ui/btn";
-import { useState } from "react";
-import sample from "../sample.json";
-import { Article } from "../model";
 
 function Header() {
-  // Need to make this so that it changes values on home screen. I.E need to add context
-  const [search, setSearch] = useState<Article[] | undefined>([]);
-
-  const handleSearch = (e: Event) => {
-    if (!(e.target as HTMLInputElement).value) {
-      return setSearch(sample);
-    }
-    const results = sample.filter((article) =>
-      article.title.includes((e.target as HTMLInputElement).value)
-    );
-    setSearch(results);
-  };
+  const navigate = useNavigate({ from: Route.fullPath });
+  const currentUrl = useLocation();
+  const { q } = useSearch({
+    from: currentUrl.pathname === "/" ? "/" : "/bookmarks",
+  });
 
   return (
     <header className="flex flex-row justify-between items-center p-4">
@@ -43,16 +39,19 @@ function Header() {
           className="py-2 px-3 focus:outline-none w-full"
           type="search"
           id="search"
+          value={q}
           placeholder="Search articles..."
-          onChange={() => handleSearch}
+          onChange={(e) =>
+            navigate({ search: (prev) => ({ ...prev, q: e.target.value }) })}
         />
-        <button className="p-3">
+        <button type="submit" className="p-3">
           <PiMagnifyingGlass />
         </button>
       </form>
       <nav className="flex flex-row gap-2">
         <Link
           to="/"
+          search={{ q: "" }}
           className="flex gap-2 items-center"
           children={({ isActive }) => (
             <>
@@ -78,6 +77,7 @@ function Header() {
         />
         <Link
           to="/bookmarks"
+          search={{ q: "" }}
           children={({ isActive }) => (
             <>
               {isActive
