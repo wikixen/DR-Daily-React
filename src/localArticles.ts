@@ -1,15 +1,26 @@
-const store = "savedArticles"
+const store = "data";
 
 export const saveArticle = (articleUrl: string) => {
-  localStorage.setItem(store, JSON.stringify(articleUrl))
-}
+  if (localStorage.getItem(store) === null) {
+    localStorage.setItem(store, "[]");
+  }
+  let oldData = JSON.parse(localStorage.getItem(store)!);
+  if (!oldData.includes(articleUrl)) {
+    oldData.push(articleUrl);
+  }
+
+  localStorage.setItem(store, JSON.stringify(oldData));
+};
 
 export const removeArticle = (articleUrl: string) => {
-  // const newArticles = localStorage.getItem(store).splice
-  // localStorage.removeItem(store, JSON.parse(articleUrl))
-}
+  const articles = JSON.parse(localStorage.getItem(store)!);
+  articles.splice(articles.indexOf(articleUrl), 1);
+  localStorage.setItem(store, JSON.stringify(articles));
+};
 
 export const getSavedArticles = () => {
-  const savedArticles: string[] = JSON.parse(localStorage.getItem(store) as string)
-  return savedArticles
-}
+  const savedArticles: string[] = JSON.parse(
+    localStorage.getItem(store) as string,
+  );
+  return savedArticles;
+};

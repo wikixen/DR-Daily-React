@@ -1,14 +1,30 @@
 import { Link } from "@tanstack/react-router";
 import {
-  PiBookmarkSimpleFill,
-  PiBookmarkSimpleLight,
+  PiBookBookmark,
+  PiBookBookmarkFill,
   PiHouseSimpleFill,
   PiHouseSimpleLight,
   PiMagnifyingGlass,
 } from "react-icons/pi";
 import { Btn } from "./ui/btn";
+import { useState } from "react";
+import sample from "../sample.json";
+import { Article } from "../model";
 
 function Header() {
+  // Need to make this so that it changes values on home screen. I.E need to add context
+  const [search, setSearch] = useState<Article[] | undefined>([]);
+
+  const handleSearch = (e: Event) => {
+    if (!(e.target as HTMLInputElement).value) {
+      return setSearch(sample);
+    }
+    const results = sample.filter((article) =>
+      article.title.includes((e.target as HTMLInputElement).value)
+    );
+    setSearch(results);
+  };
+
   return (
     <header className="flex flex-row justify-between items-center p-4">
       <h1 className="flex gap-1 text-4xl">
@@ -28,62 +44,62 @@ function Header() {
           type="search"
           id="search"
           placeholder="Search articles..."
-          // onChange={handleSearch}
+          onChange={() => handleSearch}
         />
         <button className="p-3">
           <PiMagnifyingGlass />
         </button>
       </form>
       <nav className="flex flex-row gap-2">
-          <Link
-            to="/"
-            className="flex gap-2 items-center"
-            children={({ isActive }) => (
-              <>
-                {isActive
-                  ? (
-                    <Btn>
-                      <span className="flex gap-2 items-center">
-                        <PiHouseSimpleFill />
-                        <p>Home</p>
-                      </span>
-                    </Btn>
-                  )
-                  : (
-                    <Btn>
-                      <span className="flex gap-2 items-center">
-                        <PiHouseSimpleLight />
-                        <p>Home</p>
-                      </span>
-                    </Btn>
-                  )}
-              </>
-            )}
-          />
-          <Link
-            to="/bookmarks"
-            children={({ isActive }) => (
-              <>
-                {isActive
-                  ? (
-                    <Btn>
-                      <span className="flex gap-2 items-center">
-                        <PiBookmarkSimpleFill />
-                        <p>Bookmarks</p>
-                      </span>
-                    </Btn>
-                  )
-                  : (
-                    <Btn>
-                      <span className="flex gap-2 items-center">
-                        <PiBookmarkSimpleLight />
-                        <p>Bookmarks</p>
-                      </span>
-                    </Btn>
-                  )}
-              </>
-            )}
-          />
+        <Link
+          to="/"
+          className="flex gap-2 items-center"
+          children={({ isActive }) => (
+            <>
+              {isActive
+                ? (
+                  <Btn>
+                    <span className="flex gap-2 items-center">
+                      <PiHouseSimpleFill />
+                      <p>Home</p>
+                    </span>
+                  </Btn>
+                )
+                : (
+                  <Btn>
+                    <span className="flex gap-2 items-center">
+                      <PiHouseSimpleLight />
+                      <p>Home</p>
+                    </span>
+                  </Btn>
+                )}
+            </>
+          )}
+        />
+        <Link
+          to="/bookmarks"
+          children={({ isActive }) => (
+            <>
+              {isActive
+                ? (
+                  <Btn>
+                    <span className="flex gap-2 items-center">
+                      <PiBookBookmarkFill />
+                      <p>Bookmarks</p>
+                    </span>
+                  </Btn>
+                )
+                : (
+                  <Btn>
+                    <span className="flex gap-2 items-center">
+                      <PiBookBookmark />
+                      <p>Bookmarks</p>
+                    </span>
+                  </Btn>
+                )}
+            </>
+          )}
+        />
       </nav>
     </header>
   );

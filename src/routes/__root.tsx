@@ -1,6 +1,4 @@
-import {
-  useQuery
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { PiSpinner } from "react-icons/pi";
@@ -29,7 +27,6 @@ function Layout() {
   //     ).then((res) => res.json()),
   // });
   // const [searchResults, setSearchResults] = useState<Array<Article>>([]);
-  
 
   // if (isPending) {
   //   return (
@@ -60,4 +57,4 @@ function Layout() {
       <TanStackRouterDevtools />
     </div>
   );
-};
+}
