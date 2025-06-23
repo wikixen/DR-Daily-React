@@ -20,7 +20,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootLayout() {
   return (
-    <div className="flex flex-col px-16">
+    <div className="flex flex-col px-16 dark:bg-navy">
       <Header />
       <hr />
       <Outlet />
